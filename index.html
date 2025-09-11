@@ -212,7 +212,7 @@
 
     let contadorSi = 0;
     const meta = 20;
-    let tiempo = 40; // 1 minuto
+    let tiempo = 30; // 1 minuto
     let juegoTerminado = false;
 
     function mostrarMensaje(texto, color="#333") {
@@ -272,7 +272,7 @@
     const cronometro = setInterval(() => {
       if (juegoTerminado) return;
       tiempo--;
-      const porcentaje = (tiempo / 40) * 100;
+      const porcentaje = (tiempo / 30) * 100;
       timerBar.style.width = porcentaje + "%";
       timerBar.textContent = `${tiempo}s`;
 
