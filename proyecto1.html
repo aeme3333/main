@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¿Tú me amas?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      position: relative;
+      padding: 10px;
+    }
+
+    /* Título bonito */
+    h1 {
+      color: #d6336c;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      text-align: center;
+      background: #fff0f5;
+      padding: 15px 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      border: 2px solid #d6336c;
+    }
+
+    /* Contador */
+    #contador {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    /* Barra de progreso (contador Sí) */
+    #progressContainer {
+      width: 90%;
+      max-width: 400px;
+      height: 25px;
+      background: #ddd;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    #progressBar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #38b000, #70e000);
+      text-align: center;
+      line-height: 25px;
+      color: white;
+      font-weight: bold;
+      transition: width 0.3s ease-in-out;
+      border-radius: 20px;
+      box-sizing: border-box;
+      font-size: 0.9rem;
+    }
+
+    /* Barra de tiempo */
+    #timerContainer {
+      width: 90%;
+      max-width: 400px;
+      height: 20px;
+      background: #ddd;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    #timerBar {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(to right, #ff0000, #ff7b7b);
+      text-align: center;
+      line-height: 20px;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: bold;
+      transition: width 1s linear;
+    }
+
+    .buttons {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      height: 300px;
+      margin-top: 10px;
+    }
+    button {
+      padding: 15px 25px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: absolute;
+      min-width: 60px;
+      min-height: 40px;
+    }
+    #si {
+      background: #38b000;
+      color: white;
+      left: 25%;
+      top: 40%;
+      transform: scale(0.8);
+      z-index: 2;
+    }
+    #no {
+      background: #e63946;
+      color: white;
+      left: 55%;
+      top: 40%;
+      transform: scale(1.5);
+      z-index: 1;
+    }
+
+    /* Avisos */
+    #mensaje {
+      position: fixed;
+      top: 20px;
+      padding: 15px 25px;
+      background: white;
+      border: 2px solid #333;
+      border-radius: 10px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      animation: fadein 0.5s;
+      text-align: center;
+    }
+
+    #mensajeFinal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #ffccd5;
+      color: #e63946;
+      font-size: 2rem;
+      font-weight: bold;
+      padding: 25px 40px;
+      border: 3px solid #d6336c;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 2000;
+      text-align: center;
+      animation: scaleIn 0.5s ease;
+    }
+
+    @keyframes fadein {
+      from {opacity: 0; top: 0;}
+      to {opacity: 1; top: 20px;}
+    }
+
+    @keyframes scaleIn {
+      from {transform: translate(-50%, -50%) scale(0);}
+      to {transform: translate(-50%, -50%) scale(1);}
+    }
+
+    /* Ajustes móviles */
+    @media (max-width: 480px) {
+      h1 { font-size: 1.4rem; padding: 10px 15px; }
+      #progressContainer, #timerContainer { height: 20px; }
+      #progressBar { line-height: 20px; font-size: 0.8rem; }
+      #timerBar { line-height: 20px; font-size: 0.7rem; }
+      button { padding: 12px 20px; font-size: 1rem; min-width: 50px; min-height: 35px; }
+      .buttons { height: 250px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Si logras presionar el "Sí" 20 veces me amas ❤️</h1>
+
+  <!-- Barra de progreso -->
+  <div id="progressContainer">
+    <div id="progressBar">0/20</div>
+  </div>
+
+  <!-- Cronómetro -->
+  <div id="timerContainer">
+    <div id="timerBar">60s</div>
+  </div>
+
+  <div class="buttons">
+    <button id="si">Sí</button>
+    <button id="no">No</button>
+  </div>
+
+  <!-- Avisos -->
+  <div id="mensaje"></div>
+  <div id="mensajeFinal">Yo sabía que no me amabas 😢</div>
+
+  <script>
+    const siBtn = document.getElementById("si");
+    const noBtn = document.getElementById("no");
+    const buttonsDiv = document.querySelector(".buttons");
+    const mensaje = document.getElementById("mensaje");
+    const mensajeFinal = document.getElementById("mensajeFinal");
+    const progressBar = document.getElementById("progressBar");
+    const timerBar = document.getElementById("timerBar");
+
+    let contadorSi = 0;
+    const meta = 20;
+    let tiempo = 40; // 1 minuto
+    let juegoTerminado = false;
+
+    function mostrarMensaje(texto, color="#333") {
+      mensaje.innerText = texto;
+      mensaje.style.color = color;
+      mensaje.style.display = "block";
+      setTimeout(() => {
+        mensaje.style.display = "none";
+      }, 2000);
+    }
+
+    // Mover el "Sí" cada 0.7s, permitiendo presionar
+    setInterval(() => {
+      if (juegoTerminado) return;
+      const divWidth = buttonsDiv.clientWidth;
+      const divHeight = buttonsDiv.clientHeight;
+      const btnWidth = siBtn.offsetWidth;
+      const btnHeight = siBtn.offsetHeight;
+
+      const newLeft = Math.random() * (divWidth - btnWidth);
+      const newTop = Math.random() * (divHeight - btnHeight);
+
+      siBtn.style.left = `${newLeft}px`;
+      siBtn.style.top = `${newTop}px`;
+    }, 720);
+
+    // Cuando presiona "Sí"
+    siBtn.addEventListener("click", () => {
+      if (juegoTerminado) return;
+      contadorSi++;
+
+      const porcentaje = (contadorSi / meta) * 100;
+      progressBar.style.width = porcentaje + "%";
+      progressBar.textContent = `${contadorSi}/${meta}`;
+
+      let scaleSi = parseFloat(siBtn.style.transform.replace("scale(", "").replace(")", "")) || 0.8;
+      scaleSi = Math.max(0.6, scaleSi * 0.9);
+      siBtn.style.transform = `scale(${scaleSi})`;
+
+      let scaleNo = parseFloat(noBtn.style.transform.replace("scale(", "").replace(")", "")) || 1.5;
+      scaleNo = Math.min(scaleNo * 1.05, 5);
+      noBtn.style.transform = `scale(${scaleNo})`;
+
+      if (contadorSi >= meta) {
+        juegoTerminado = true;
+        mostrarMensaje("¡Lo lograste! 😍 Ahora sé que me amas ❤️", "#38b000");
+      }
+    });
+
+    // Cuando presiona "No"
+    noBtn.addEventListener("click", () => {
+      if (juegoTerminado) return;
+      mostrarMensaje("Yo sabíaaa que no me amass 🥲", "#e63946");
+    });
+
+    // Cronómetro visual
+    const cronometro = setInterval(() => {
+      if (juegoTerminado) return;
+      tiempo--;
+      const porcentaje = (tiempo / 40) * 100;
+      timerBar.style.width = porcentaje + "%";
+      timerBar.textContent = `${tiempo}s`;
+
+      if (tiempo <= 0) {
+        juegoTerminado = true;
+        mensajeFinal.style.display = "block";
+      }
+    }, 1000);
+
+    // "No" crece cada 8 segundos
+    setInterval(() => {
+      if (juegoTerminado) return;
+      let scaleNo = parseFloat(noBtn.style.transform.replace("scale(", "").replace(")", "")) || 1.5;
+      scaleNo = Math.min(scaleNo * 1.3, 6);
+      noBtn.style.transform = `scale(${scaleNo})`;
+    }, 7000);
+  </script>
+</body>
+</html>
