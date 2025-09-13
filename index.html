@@ -184,12 +184,12 @@
 
   <!-- Barra de progreso -->
   <div id="progressContainer">
-    <div id="progressBar">0/30</div>
+    <div id="progressBar">0/40</div>
   </div>
 
   <!-- Cronómetro -->
   <div id="timerContainer">
-    <div id="timerBar">60s</div>
+    <div id="timerBar">25s</div>
   </div>
 
   <div class="buttons">
@@ -211,8 +211,8 @@
     const timerBar = document.getElementById("timerBar");
 
     let contadorSi = 0;
-    const meta = 30;
-    let tiempo = 30; // 1 minuto
+    const meta = 40;
+    let tiempo = 25; // 1 minuto
     let juegoTerminado = false;
 
     function mostrarMensaje(texto, color="#333") {
@@ -237,7 +237,7 @@
 
       siBtn.style.left = `${newLeft}px`;
       siBtn.style.top = `${newTop}px`;
-    }, 680);
+    }, 600);
 
     // Cuando presiona "Sí"
     siBtn.addEventListener("click", () => {
@@ -272,7 +272,7 @@
     const cronometro = setInterval(() => {
       if (juegoTerminado) return;
       tiempo--;
-      const porcentaje = (tiempo / 30) * 100;
+      const porcentaje = (tiempo / 25) * 100;
       timerBar.style.width = porcentaje + "%";
       timerBar.textContent = `${tiempo}s`;
 
@@ -288,7 +288,7 @@
       let scaleNo = parseFloat(noBtn.style.transform.replace("scale(", "").replace(")", "")) || 1.5;
       scaleNo = Math.min(scaleNo * 1.3, 6);
       noBtn.style.transform = `scale(${scaleNo})`;
-    }, 7000);
+    }, 6000);
   </script>
 </body>
 </html>
